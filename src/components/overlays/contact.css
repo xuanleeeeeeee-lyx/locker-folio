@@ -82,10 +82,20 @@
   word-break: break-word;
 }
 
-.cb__note p {
+.cb__note p,
+.cb__noteLink {
+  display: block;
   margin: 0;
+  color: inherit;
+  text-decoration: none;
   /* 文案里的换行要生效：便签是窄条，联系方式得由作者决定在哪断行 */
   white-space: pre-line;
+}
+
+.cb__noteLink:hover,
+.cb__noteLink:focus-visible {
+  text-decoration: underline;
+  text-underline-offset: 2px;
 }
 
 /* 只给屏幕阅读器的状态播报 */

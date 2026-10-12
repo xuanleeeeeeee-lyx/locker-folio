@@ -2,8 +2,8 @@
 /**
  * 资产门禁：把「错误 preload」「素材引用断链」「首屏预算超限」变成可失败的检查。
  *
- *   bun run scripts/check-assets.mjs          对源码目录检查
- *   bun run scripts/check-assets.mjs dist     对构建产物检查
+ *   node scripts/check-assets.mjs          对源码目录检查
+ *   node scripts/check-assets.mjs dist     对构建产物检查
  */
 import { readdirSync, readFileSync, statSync, existsSync } from 'node:fs'
 import { join, extname, relative } from 'node:path'
@@ -149,7 +149,7 @@ if (!target) {
     ['清单 bytes/version 与磁盘对账', 'scripts/assets/sync-manifest.mjs'],
   ]) {
     if (!existsSync(join(ROOT, script))) continue
-    const r = spawnSync('bun', [script, '--check'], { cwd: ROOT, encoding: 'utf8' })
+    const r = spawnSync(process.execPath, [script, '--check'], { cwd: ROOT, encoding: 'utf8' })
     if (r.status !== 0) {
       const tail = (r.stdout || r.stderr || '').trim().split('\n').slice(-2).join(' / ')
       errors.push(`${label}未通过：${tail}`)

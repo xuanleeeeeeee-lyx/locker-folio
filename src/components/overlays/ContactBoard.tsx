@@ -9,6 +9,7 @@ type Note = {
   id: string
   no: number
   text: string
+  href?: string
   color: string
   x: number
   y: number
@@ -249,7 +250,7 @@ export default function ContactBoard() {
                 data-fresh={board.fresh === n.id ? '' : undefined}
                 data-own={n.own || undefined}
                 // 装饰性的初始便签不进入无障碍树，也不占 Tab 顺序
-                aria-hidden={n.own ? undefined : true}
+                aria-hidden={n.own || n.href ? undefined : true}
                 role={n.own ? 'group' : undefined}
                 aria-roledescription={n.own ? '便签' : undefined}
                 aria-label={
@@ -269,7 +270,18 @@ export default function ContactBoard() {
                 }}
               >
                 <span className="cb__pin" aria-hidden />
-                <p>{n.text}</p>
+                {n.href ? (
+                  <a
+                    className="cb__noteLink"
+                    href={n.href}
+                    target={n.href.startsWith('http') ? '_blank' : undefined}
+                    rel={n.href.startsWith('http') ? 'noreferrer noopener' : undefined}
+                  >
+                    {n.text}
+                  </a>
+                ) : (
+                  <p>{n.text}</p>
+                )}
                 {n.own && (
                   <button
                     type="button"

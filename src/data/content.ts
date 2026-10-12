@@ -32,8 +32,7 @@ export const NAV = [
 ] as const
 
 /* ── ABOUT：工牌 ───────────────────────────────────────
- * 工牌字段是简历的直读版：六行放得下姓名/性别/年龄/城市/院校/专业，
- * 学历（硕士在读）合进「院校」一行，避免出现两个语义重复的行。 */
+ * 六行全部来自简历：个人信息、本硕院校与专业、学业成绩。 */
 export const ABOUT = {
   cardNo: 'NO. 2026-0001',
   title: ['BASIC', 'INFORMATION'],
@@ -41,19 +40,19 @@ export const ABOUT = {
   sub: 'PERSONAL PORTFOLIO ID CARD',
   fields: [
     { k: 'NAME / 姓名', v: '李怡璇' },
-    { k: 'GENDER / 性别', v: '女' },
     { k: 'AGE / 年龄', v: '22' },
-    { k: 'CITY / 现居', v: '香港' },
-    { k: 'SCHOOL / 院校', v: '香港理工大学 · 硕士在读' },
+    { k: 'EDUCATION / 学历', v: '香港理工大学 · 硕士在读' },
     { k: 'MAJOR / 专业', v: '生成式人工智能与人文科学' },
+    { k: 'UNDERGRAD / 本科', v: '武汉纺织大学 · 网络与新媒体' },
+    { k: 'ACADEMIC / 成绩', v: '专业前 5% · GPA 4.15/5' },
   ],
   email: '2433679374@qq.com',
   phone: '132 7757 1951',
-  stampTop: 'CERTIFIED',
-  stampMid: '2026',
-  stampRing: 'PERSONAL PORTFOLIO · LI YIXUAN ·',
-  footL: 'IN MY CREATIVE ERA',
-  footR: 'PERSONAL PORTFOLIO · 2026',
+  stampTop: 'NATIONAL',
+  stampMid: 'SCHOLARSHIP',
+  stampRing: 'LI YIXUAN · MEDIA & AI · PORTFOLIO 2026 ·',
+  footL: 'STORYTELLING · DATA · AI',
+  footR: 'NEW MEDIA PORTFOLIO · 2026',
   /* 工牌右下那张小标签 */
   tagTop: 'NEW MEDIA',
   tagBody: '内容运营',
@@ -280,14 +279,13 @@ export const PRODUCTS = [
 ]
 
 /* ── CONTACT：软木板便签 ───────────────────────────────
- * 便签是装饰性的（aria-hidden），真正可点的入口在浮层里的打字纸与下方说明。
- * 文案要短：笔记宽度约 16 个等宽字符，超了会自动折行。 */
+ * 联系方式和公开社媒主页。文案要短：笔记宽度约 16 个等宽字符，超了会自动折行。 */
 export const NOTE_COLORS = ['#cfe0c3', '#f0e6a8', '#e8b7b7', '#a9c9dd', '#e5cfe0', '#d8cdb8']
 
 export const SEED_NOTES = [
-  { id: 's1', text: 'EMAIL\n2433679374\n@qq.com', color: '#cfe0c3', x: 12, y: 38, rot: -2 },
-  { id: 's2', text: '小红书\n西班牙的荷包蛋', color: '#f0e6a8', x: 68, y: 10, rot: 3 },
-  { id: 's3', text: '抖音\n@号号', color: '#e8b7b7', x: 78, y: 32, rot: -3 },
-  { id: 's4', text: 'TEL\n132 7757 1951', color: '#a9c9dd', x: 10, y: 16, rot: 2 },
+  { id: 's1', text: 'EMAIL\n2433679374\n@qq.com', href: 'mailto:2433679374@qq.com', color: '#cfe0c3', x: 12, y: 38, rot: -2 },
+  { id: 's2', text: '小红书\n7,355 赞与收藏', href: 'https://xhslink.cn/o/1NYvHnavvWF', color: '#f0e6a8', x: 68, y: 10, rot: 3 },
+  { id: 's3', text: '抖音\n858 万播放', href: 'https://v.douyin.com/PcKEpqAkrFk/', color: '#e8b7b7', x: 78, y: 32, rot: -3 },
+  { id: 's4', text: 'TEL\n132 7757 1951', href: 'tel:+8613277571951', color: '#a9c9dd', x: 10, y: 16, rot: 2 },
   { id: 's5', text: '香港理工大学\n硕士在读', color: '#e5cfe0', x: 22, y: 62, rot: -1 },
 ]

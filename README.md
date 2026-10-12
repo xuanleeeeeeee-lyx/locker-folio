@@ -72,7 +72,7 @@ node scripts/assets/sync-work-manifest.mjs
 几个约束（改数据时会踩到）：
 - `POSTERS` **必须正好 11 条**：3D 卡组的倾角/堆叠数组各 11 项，多一条会取到 `undefined`。
 - `MAGAZINE_PAGES` 的顺序是「封面 + 每个版面 (左半, 右半)」—— 一个跨页对应 PDF 里的一整页。
-- 便签文案用 `\n` 决定断行（`.cb__note p` 是 `white-space: pre-line`）。
+- 便签文案用 `\n` 决定断行（`.cb__note p` 与 `.cb__noteLink` 是 `white-space: pre-line`）。
 
 ## 目录
 
@@ -109,7 +109,7 @@ src/
     Nav.tsx                顶部导航
     Credit.tsx             左下角复刻出处与源码入口
     overlays/              四个内容浮层 + OverlayHost（dialog 语义 / focus trap）
-    work/                  SELECTED WORK 的子视图（海报 / 杂志 / 照片墙 / 影像 / 网站）
+    work/                  SELECTED WORK 的子视图（海报 / 杂志 / 视觉墙 / 影像 / 产品）
     fallback/              无 WebGL / Save-Data / 低性能设备的静态首屏
 public/assets/             物件贴图、贴纸图集、作品图（webp）
 scripts/assets/            贴纸图集打包、作品集 PDF 导入与素材生成
@@ -131,11 +131,7 @@ bun run check:bundle      # 在构建产物上跑同一套预算
 
 ## 已知问题
 
-- `bun run check:assets` 里的一条错误在本次内容改造**之前就存在**：
-  `public/assets/obj2/doorDecals.webp` 与 `pack-decals.mjs` 当前排位表不一致
-  （stk8 / stk9 的缩放差），仓库里提交的图集版本是 41baddc8、脚本期望 ee25f01c。
-  要消掉得重打图集，会连带改动柜门贴纸的实际大小，因此没有顺手改。
-- 沙箱环境访问不到 Google Fonts，本地截图里中文显示为方框；正常网络下无此问题。
+- 沙箱环境访问不到 Google Fonts 时，本地截图可能回退到系统字体；正常网络下会加载页面指定字体。
 
 ---
 

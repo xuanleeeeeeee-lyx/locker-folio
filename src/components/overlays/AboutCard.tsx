@@ -101,11 +101,11 @@ export default function AboutCard() {
             </svg>
             <div className="idc__contact">
               <span className="idc__ck">EMAIL</span>
-              <span className="idc__cv">{ABOUT.email}</span>
+              <a className="idc__cv" href={`mailto:${ABOUT.email}`}>{ABOUT.email}</a>
             </div>
             <div className="idc__contact idc__contact--mid">
               <span className="idc__ck">PHONE</span>
-              <span className="idc__cv">{ABOUT.phone}</span>
+              <a className="idc__cv" href={`tel:+86${ABOUT.phone.replaceAll(' ', '')}`}>{ABOUT.phone}</a>
             </div>
             <div className="idc__tag" aria-hidden>
               <span className="idc__tagTop">{ABOUT.tagTop}</span>
