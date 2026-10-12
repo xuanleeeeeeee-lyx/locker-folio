@@ -1,8 +1,8 @@
 /* 站点全部文案与作品数据 —— 与参考逐帧核对整理 */
 
 export const SITE = {
-  owner: 'AVA LI',
-  tagline: "AVA LI — PORTFOLIO '26",
+  owner: 'YIXUAN LI',
+  tagline: "YIXUAN LI — PORTFOLIO '26",
   year: '2026',
 }
 
@@ -15,7 +15,7 @@ export const CREDIT = {
   platform: '小红书',
   originUrl:
     'https://www.xiaohongshu.com/discovery/item/6a852ae7000000002500b24e?xsec_token=ABxWdb99F51QhPGOvNNuLGxYSbTeGIKFnMDujjIeP1Kr8=',
-  repoUrl: 'https://github.com/qzz0518/locker-folio',
+  repoUrl: 'https://github.com/xuanleeeeeeee-lyx/locker-folio',
 }
 
 /* ── 顶部导航 ─────────────────────────────────────────── */
