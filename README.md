@@ -9,6 +9,9 @@
 
 > **本项目是复刻练习。** 视觉创意来自小红书博主 **momo** 的 Locker 个人网站，
 > 见文末「版权与致谢」。
+>
+> **当前站点内容为李怡璇（LI YIXUAN）的个人作品集**：文案取自她的简历与作品集，
+> 作品图由作品集 PDF 自动裁切而来，见下文「内容的来源与替换」。
 
 ---
 
@@ -35,6 +38,41 @@ Node 版工具链同样可用，但仓库锁文件是 `bun.lock`，请统一用 
 
 three + R3F 约 240KB gzip，用 `lazy()` 单独切 chunk，并在模块求值时就发起
 `import()` 预热，让 chunk 下载与首屏图片加载并行（见 `src/App.tsx` 顶部注释）。
+
+## 内容的来源与替换
+
+站点的全部文案集中在 `src/data/content.ts`（一个文件即全部）；作品图是**从作品集
+PDF 自动裁出来**的，不手工摆图。
+
+```bash
+# 1. 作品集 / 简历 PDF → public/assets 各栏目的母版图
+node scripts/assets/import-portfolio-pdf.mjs <作品集.pdf> <简历.pdf>
+
+# 2. 母版 → 响应式变体（按各栏目最大显示宽度的 1x / 2x）
+node scripts/gen-image-variants.mjs
+
+# 3. 作品资源清单（assetManifest.ts 里的 WORK_* 两段）按磁盘真值重写
+node scripts/assets/sync-work-manifest.mjs
+```
+
+第 1 步里的**裁切表**（`COVERS` / `SPREADS` / `POSTERS` / `WALLS`）是唯一需要人工维护的
+地方：每一行写明「用第几页、页面里的哪一块」。换作品集时改这张表即可 ——
+页面比例是 0–1 的相对值，换版本时不会因为页面尺寸变化而错位。
+
+各栏目对应的数据：
+
+| 栏目 | content.ts 里的字段 | 素材目录 | 母版宽度 |
+| --- | --- | --- | --- |
+| 影像 VIDEO | `VIDEOS` | `cover/` | 1200（16:9） |
+| 版面设计 DESIGN | `POSTERS` + `MAGAZINE_PAGES` | `posters/`、`mag/` | 700（2:3）、760（0.707 单页） |
+| 视觉墙 VISUAL WALL | `PHOTOS` | `photo/` | 900（横版整页） |
+| 产品设计 PRODUCT | `PRODUCTS` | `cover/` | 1200 |
+| 工牌头像 | — | `assets/avatar.webp` | 394（简历里的证件照） |
+
+几个约束（改数据时会踩到）：
+- `POSTERS` **必须正好 11 条**：3D 卡组的倾角/堆叠数组各 11 项，多一条会取到 `undefined`。
+- `MAGAZINE_PAGES` 的顺序是「封面 + 每个版面 (左半, 右半)」—— 一个跨页对应 PDF 里的一整页。
+- 便签文案用 `\n` 决定断行（`.cb__note p` 是 `white-space: pre-line`）。
 
 ## 目录
 
@@ -74,7 +112,9 @@ src/
     work/                  SELECTED WORK 的子视图（海报 / 杂志 / 照片墙 / 影像 / 网站）
     fallback/              无 WebGL / Save-Data / 低性能设备的静态首屏
 public/assets/             物件贴图、贴纸图集、作品图（webp）
-scripts/assets/            贴纸图集打包与素材生成（decal-atlas.json 会被 src 直接引用）
+scripts/assets/            贴纸图集打包、作品集 PDF 导入与素材生成
+                           （import-portfolio-pdf.mjs / sync-work-manifest.mjs）
+scripts/gen-image-variants.mjs  母版 → 响应式变体（sharp，不依赖 libwebp 命令行）
 scripts/check-assets.mjs   资产引用、preload 漂移与首屏体积预算
 ```
 
@@ -86,6 +126,16 @@ bun run build             # tsc -b 严格类型检查 + 产物构建
 bun run check:assets      # 资产引用、preload 漂移、首屏体积预算
 bun run check:bundle      # 在构建产物上跑同一套预算
 ```
+
+---
+
+## 已知问题
+
+- `bun run check:assets` 里的一条错误在本次内容改造**之前就存在**：
+  `public/assets/obj2/doorDecals.webp` 与 `pack-decals.mjs` 当前排位表不一致
+  （stk8 / stk9 的缩放差），仓库里提交的图集版本是 41baddc8、脚本期望 ee25f01c。
+  要消掉得重打图集，会连带改动柜门贴纸的实际大小，因此没有顺手改。
+- 沙箱环境访问不到 Google Fonts，本地截图里中文显示为方框；正常网络下无此问题。
 
 ---
 
@@ -108,9 +158,11 @@ bun run check:bundle      # 在构建产物上跑同一套预算
 
 **素材说明**
 
-`public/assets/` 下的贴图、贴纸、海报、照片等均为**替代素材**（AI 生成或可商用图源），
-不是原站资产；其中的人物形象、作品图仅作排版占位。若你 fork 本仓库用于自己的作品集，
-请自行替换为你有权使用的素材与文案（文案集中在 `src/data/content.ts`）。
+`public/assets/` 下的作品图（`cover/`、`posters/`、`mag/`、`photo/`、`avatar.webp`）
+是**本作品集作者本人的作品与证件照**，来自她自己的作品集/简历 PDF，版权归作者本人所有；
+`obj/`、`obj2/` 下的物件贴图与贴纸图集是原站资产之外的**替代素材**（AI 生成）。
+如果 fork 本仓库做自己的作品集，请把上述作品图换成你有权使用的素材，
+文案集中在 `src/data/content.ts`，替换流程见「内容的来源与替换」。
 
 字体通过 Google Fonts 引入（Inter、Noto Sans/Serif SC、Playfair Display、Ultra、
 Archivo Black、Alfa Slab One、Bodoni Moda、Courier Prime），版权归各字体作者，

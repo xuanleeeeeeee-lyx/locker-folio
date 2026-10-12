@@ -108,8 +108,8 @@ export default function AboutCard() {
               <span className="idc__cv">{ABOUT.phone}</span>
             </div>
             <div className="idc__tag" aria-hidden>
-              <span className="idc__tagTop">xxx</span>
-              <span className="idc__tagBody">xxx</span>
+              <span className="idc__tagTop">{ABOUT.tagTop}</span>
+              <span className="idc__tagBody">{ABOUT.tagBody}</span>
             </div>
           </div>
 

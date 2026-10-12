@@ -1,8 +1,13 @@
-/* 站点全部文案与作品数据 —— 与参考逐帧核对整理 */
+/* 站点全部文案与作品数据。
+ *
+ * 数据来源：李怡璇 2026 作品集 / 简历（见 README「素材与文案来源」）。
+ * 作品图由 scripts/assets/import-portfolio-pdf.mjs 从作品集 PDF 裁切而来，
+ * 文件名（v1 / s1 / d1l / w1）与该脚本里的裁切表一一对应，换稿只需改那一张表。
+ */
 
 export const SITE = {
-  owner: 'YIXUAN LI',
-  tagline: "YIXUAN LI — PORTFOLIO '26",
+  owner: 'LI YIXUAN',
+  tagline: "LI YIXUAN — PORTFOLIO '26",
   year: '2026',
 }
 
@@ -26,30 +31,37 @@ export const NAV = [
   { id: 'contact', label: 'CONTACT' },
 ] as const
 
-/* ── ABOUT：工牌 ─────────────────────────────────────── */
+/* ── ABOUT：工牌 ───────────────────────────────────────
+ * 工牌字段是简历的直读版：六行放得下姓名/性别/年龄/城市/院校/专业，
+ * 学历（硕士在读）合进「院校」一行，避免出现两个语义重复的行。 */
 export const ABOUT = {
-  cardNo: 'NO. xxx',
+  cardNo: 'NO. 2026-0001',
   title: ['BASIC', 'INFORMATION'],
   titleCn: '个人简介',
   sub: 'PERSONAL PORTFOLIO ID CARD',
   fields: [
-    { k: 'NAME / 姓名', v: 'XXX' },
-    { k: 'GENDER / 性别', v: 'XXX' },
-    { k: 'AGE / 年龄', v: 'XXX' },
-    { k: 'CLASS / 班级', v: 'XXX' },
-    { k: 'EDUCATION / 学历', v: 'XXX' },
-    { k: 'MAJOR / 专业', v: 'XXX' },
+    { k: 'NAME / 姓名', v: '李怡璇' },
+    { k: 'GENDER / 性别', v: '女' },
+    { k: 'AGE / 年龄', v: '22' },
+    { k: 'CITY / 现居', v: '香港' },
+    { k: 'SCHOOL / 院校', v: '香港理工大学 · 硕士在读' },
+    { k: 'MAJOR / 专业', v: '生成式人工智能与人文科学' },
   ],
-  email: 'xxx',
-  phone: 'xxx',
+  email: '2433679374@qq.com',
+  phone: '132 7757 1951',
   stampTop: 'CERTIFIED',
-  stampMid: 'xxx',
-  stampRing: 'PERSONAL PORTFOLIO · xxx ·',
+  stampMid: '2026',
+  stampRing: 'PERSONAL PORTFOLIO · LI YIXUAN ·',
   footL: 'IN MY CREATIVE ERA',
-  footR: 'PERSONAL DESIGN PORTFOLIO · 2026',
+  footR: 'PERSONAL PORTFOLIO · 2026',
+  /* 工牌右下那张小标签 */
+  tagTop: 'NEW MEDIA',
+  tagBody: '内容运营',
 }
 
-/* ── SKILLS：三张卡片 ─────────────────────────────────── */
+/* ── SKILLS：三张卡片 ───────────────────────────────────
+ * 三张卡分别是「平台运营 / 内容制作 / AI 与数据」，与简历里的
+ * 新媒体平台、软件技能、其他技能三栏对应。 */
 export type SkillCard = {
   no: string
   kicker: string
@@ -63,45 +75,48 @@ export type SkillCard = {
 export const SKILLS: SkillCard[] = [
   {
     no: '01',
-    kicker: '01 / VISUAL DESIGN',
-    title: '视觉设计',
-    desc: '以排版、色彩与图像建立可被记住的视觉秩序。',
+    kicker: '01 / NEW MEDIA OPERATION',
+    title: '新媒体运营',
+    desc: '多平台内容从选题、脚本到发布与复盘的全流程运营。',
     rows: [
-      { k: 'GRAPHIC', v: 'Photoshop / Illustrator' },
-      { k: 'LAYOUT', v: 'InDesign / Figma' },
-      { k: 'MOTION', v: 'After Effects / C4D' },
+      { k: 'PLATFORM', v: '公众号 / 视频号 / 抖音 / 小红书 / B站 / 微博' },
+      { k: 'CONTENT', v: '选题策划 · 脚本 · 拍摄剪辑 · 直播' },
+      { k: 'RESULT', v: '抖音单账号 858 万播放 · 小红书 7,355 赞藏' },
     ],
     bg: '#1b28d8',
     fg: '#ffffff',
   },
   {
     no: '02',
-    kicker: '02 / DATA & INSIGHT',
-    title: '数据分析',
-    desc: '整理、分析并解释数据，为叙事与决策建立清晰依据。',
+    kicker: '02 / CONTENT PRODUCTION',
+    title: '内容制作',
+    desc: '视音频与图文的全流程制作，把想法做成能发出去的成品。',
     rows: [
-      { k: 'ANALYSIS', v: 'SPSS / SQL / Python' },
-      { k: 'WORKFLOW', v: 'Excel / VLOOKUP / 数据透视表' },
+      { k: 'VIDEO', v: 'Premiere / 剪映 / After Effects' },
+      { k: 'DESIGN', v: 'Photoshop / Figma / H5 工具 / Dreamweaver' },
+      { k: 'DATA', v: 'Excel / Tableau / SPSS / Python' },
     ],
     bg: '#c8f322',
     fg: '#12140f',
   },
   {
     no: '03',
-    kicker: '03 / GENERATIVE PRACTICE',
-    title: 'AI 工具',
-    desc: '把生成式工具融入研究、视觉试验与创意内容生产。',
+    kicker: '03 / AIGC & RESEARCH',
+    title: 'AI 与数据',
+    desc: '把生成式工具与数据方法接进内容生产与用户研究。',
     rows: [
-      { k: 'IMAGE', v: 'Recraft / 即梦 AI / Nano Banana' },
-      { k: '3D', v: '焦点 AI / 混元 AI / Tripo' },
-      { k: 'RESEARCH', v: 'Gemini / GPT' },
+      { k: 'AIGC', v: 'AI 生成视频 / 音乐 / 图文 · Vibe coding' },
+      { k: 'RESEARCH', v: 'NLP / LLM 应用 · 用户访谈 · 舆情分析' },
+      { k: 'LANGUAGE', v: 'CET-4 / CET-6 · IELTS 7.0' },
     ],
     bg: '#ffffff',
     fg: '#14161a',
   },
 ]
 
-/* ── SELECTED WORK：四个文件夹 ───────────────────────── */
+/* ── SELECTED WORK：四个文件夹 ─────────────────────────
+ * id 是内部路由键（store 的 WorkView + WorkFolders 的版位表都按它索引），
+ * 换文案时只改 en / cn / bg / fg。 */
 export const FOLDERS = [
   {
     id: 'video',
@@ -118,7 +133,7 @@ export const FOLDERS = [
   {
     id: 'design',
     en: ['DESIGN'],
-    cn: '视觉类设计',
+    cn: '版面设计',
     bg: '#c8f322',
     fg: '#1b28d8',
     cnFg: '#1b28d8',
@@ -128,9 +143,9 @@ export const FOLDERS = [
     z: 3,
   },
   {
-    id: 'photograph',
-    en: ['PHOTO', 'GRAPH'],
-    cn: '摄影作品',
+    id: 'wall',
+    en: ['VISUAL', 'WALL'],
+    cn: '视觉墙',
     bg: '#1b28d8',
     fg: '#c8f322',
     cnFg: '#ffffff',
@@ -140,9 +155,9 @@ export const FOLDERS = [
     z: 2,
   },
   {
-    id: 'website',
-    en: ['WEBSITE', '&', 'WRITING'],
-    cn: '文字作品',
+    id: 'product',
+    en: ['PRODUCT'],
+    cn: '产品设计',
     bg: '#f8f8f6',
     fg: '#14161a',
     cnFg: '#14161a',
@@ -153,115 +168,126 @@ export const FOLDERS = [
   },
 ] as const
 
-/* ── DESIGN › 01 POSTERS ─────────────────────────────── */
+/* ── DESIGN › 01 海报牌 ────────────────────────────────
+ * 3D 卡组的 TILT / STACK_* 数组各有 11 项（PostersThreeScene），
+ * 所以这里必须正好 11 条，多一条会取到 undefined 让卡片飞出去。 */
 export const POSTERS = [
-  { src: 'greenapple', title: 'GREEN APPLE' },
-  { src: 'happynewyear', title: 'HAPPY NEW YEAR' },
-  { src: 'streamnow', title: 'STREAM NOW' },
-  { src: 'butterfly', title: '无人之境 · UNMANNED REALM' },
-  { src: 'frangipani', title: 'WHERE FRANGIPANI FALLS' },
-  { src: 'chocaward', title: '年度创新糖巧奖' },
-  { src: 'childhood', title: 'HELLO CHILDHOOD MEMORIES' },
-  { src: 'yexing', title: '夜行之梦 · DREAM IN FLIGHT' },
-  { src: 'chocmint', title: '薄荷味夹心黑巧克力' },
-  { src: 'grassfest', title: '草地音乐节 · GRASS FEST' },
-  { src: 'research', title: 'US-CHINA RESEARCH TRENDS' },
+  { src: 's1', title: '听她"奖" · 三八红旗手 63 年' },
+  { src: 's2', title: '历史沿革 · HISTORY' },
+  { src: 's3', title: '足迹地图 · THE MAP' },
+  { src: 's4', title: '评选标准 · SELECTION CRITERIA' },
+  { src: 's5', title: '评选标准 · 中文版' },
+  { src: 's6', title: '职业流变 · CAREER CHANGE' },
+  { src: 's7', title: '她们的奖 · THEIR AWARDS' },
+  { src: 's8', title: '她们的奖 · 数据可视化' },
+  { src: 's9', title: '查客 · 目标用户画像' },
+  { src: 's10', title: '禾狸 · 产品原型' },
+  { src: 's11', title: '禾狸 · 视觉系统' },
 ]
 
-/* ── DESIGN › 02 MAGAZINE ────────────────────────────── */
-export const MAGAZINE_PAGES = ['m1', 'm2', 'm3', 'm4', 'm5', 'm6']
+/* ── DESIGN › 02 样刊 ──────────────────────────────────
+ * 每个版面在 PDF 里是一整页横排，导入时沿中缝对半切成 0.707 的竖版单页，
+ * 翻页组件的跨页 = (左半, 右半)，于是同一个跨页拼回原版面。
+ * 顺序固定为：封面 → 每个版面 (l, r)。 */
+export const MAGAZINE_PAGES = [
+  'cover',
+  'd1l', 'd1r',
+  'd2l', 'd2r',
+  'd3l', 'd3r',
+  'd4l', 'd4r',
+  'd5l', 'd5r',
+  'd6l', 'd6r',
+]
 
-/* ── DESIGN › 03 IP DESIGN ───────────────────────────── */
-export const IP_DESIGN = {
-  kicker: '03 / IP DESIGN',
-  title: 'IP DESIGN',
-  cn: 'IP 形象设计',
-  desc: '围绕一个圆润的原创角色展开：从基础形体、材质到延展物料，建立一套可复用的形象语言。',
-  swatches: [
-    { name: 'CLAY', hex: '#e3d3bb' },
-    { name: 'SAND', hex: '#d6c3a5' },
-    { name: 'CREAM', hex: '#f2eadd' },
-    { name: 'INK', hex: '#2c2925' },
-  ],
-  specs: [
-    { k: 'FORM', v: '球体 / 圆角几何体' },
-    { k: 'MATERIAL', v: '哑光陶土 · 微磨砂' },
-    { k: 'OUTPUT', v: '3D 模型 / 表情包 / 周边' },
-  ],
-}
-
-/* ── PHOTOGRAPH ──────────────────────────────────────── */
+/* ── VISUAL WALL ───────────────────────────────────────
+ * 无限漂移的视觉墙：一格是一整页版面。槽位按 4×4 取模复用，
+ * 所以数组长度（16）不必等于图片数（12）。 */
 export const PHOTOS = [
-  'p1', 'p4', 'p2', 'p6',
-  'p5', 'p3', 'p6', 'p1',
-  'p2', 'p5', 'p4', 'p3',
-  'p6', 'p1', 'p3', 'p5',
+  'w1', 'w2', 'w3', 'w4',
+  'w5', 'w6', 'w7', 'w8',
+  'w9', 'w10', 'w11', 'w12',
+  'w1', 'w4', 'w7', 'w10',
 ]
 
 /* ── VIDEO ───────────────────────────────────────────── */
 export const VIDEOS = [
   {
     no: '01',
-    en: 'CHARACTER PV',
-    cn: '动漫单人角色 PV',
-    desc: 'Minimax 辅助生成制作二次元风格单人角色宣传短片',
-    cover: 'pv1',
-    href: 'https://www.feicut.com/fv/FVf0hc366wam?cm=1&fc=2&p=0',
+    en: 'DOUYIN / ACCOUNT',
+    cn: '抖音账号运营',
+    desc: '选题、分镜、剪辑到发布的全流程运营：账号累计播放 858 万，诊断建议页显示播放量已超同类创作者 100%。',
+    cover: 'v1',
+    href: 'https://v.douyin.com/PcKEpqAkrFk/',
   },
   {
     no: '02',
-    en: 'ACTION CUT',
-    cn: '动作向动漫 PV',
-    desc: '多角色动作分镜与节奏剪辑试验',
-    cover: 'pv2',
-    href: 'https://www.feicut.com/fv/FVbhfppjrege?cm=1&fc=1&p=0',
-  },
-]
-
-/* ── WEBSITE & WRITING ───────────────────────────────── */
-/* href 是占位：三个站点还没有可公开的正式地址，一律先指向 '#'，
-   面板上的 OPEN PROJECT 同时带 aria-disabled。拿到真实链接后只改这三处。
-   glow 是每张封面的主色，用来喂 .wsc__glow 的背景光晕 —— 原来那三个值
-   （#f6e9c8 / #f7dcd8 / #dceccd）是掺了大量白的浅色，铺在 --paper #f8f7fa 上
-   几乎没有色差，看不出光晕；这里往各自封面的主色方向加饱和度。 */
-export const WEBSITES = [
-  {
-    no: '01',
-    slug: 'COFFEE / IN CHINA',
-    title: ['Coffee / In', 'China'],
-    kicker: 'DATA JOURNALISM · WEB',
-    desc: '中国咖啡市场在消费降级、价格竞争与情绪经济之间的增长逻辑。',
-    cover: 'coffee',
-    glow: '#f2d49a', // 咖啡封面的焦糖黄
-    href: '#',
-  },
-  {
-    no: '02',
-    slug: 'SHORT DRAMA / OVERSEAS',
-    title: ['Short Drama /', 'Overseas'],
-    kicker: 'FEATURE · WEB',
-    desc: '短剧出海：内容工业化生产与海外分发链路的一次拆解。',
-    cover: 'drama',
-    glow: '#f0bfa4', // 短剧封面的暖橘
-    href: '#',
+    en: 'RED / ACCOUNT',
+    cn: '小红书账号运营',
+    desc: '图文与短视频双线运营：7,355 次赞与收藏，单篇笔记最高 3.8 万浏览。',
+    cover: 'v2',
+    href: 'https://xhslink.cn/o/1NYvHnavvWF',
   },
   {
     no: '03',
-    slug: 'WECHAT / ARTICLE',
-    title: ['WeChat /', 'Article'],
-    kicker: 'EDITORIAL · 图文',
-    desc: '公众号长图文写作与版式：把调研转成可读、可传播的叙事。',
-    cover: 'wechat',
-    glow: '#d7e3a4', // 图文封面的草绿
-    href: '#',
+    en: 'AI NEWS FILM',
+    cn: '《给新闻人的告白》',
+    desc: '基于 AI 生成技术的新闻叙事音乐与影像创作：作词、作曲与影像都由生成式工具参与完成。',
+    cover: 'v3',
+    href: 'https://b23.tv/KXMvtlP',
+  },
+  {
+    no: '04',
+    en: 'AD / CRAZY THURSDAY',
+    cn: '疯狂星期四 · 广告片',
+    desc: '以多元宇宙为灵感的 AI 生成广告短片：文案、分镜与画面由生成式工具协作完成。',
+    cover: 'v4',
+    href: 'https://youtu.be/dXYcusSmuW0',
   },
 ]
 
-/* ── CONTACT：软木板便签 ─────────────────────────────── */
+/* ── PRODUCT DESIGN ────────────────────────────────────
+ * 两个产品设计项目：都没有公开的线上地址，所以卡片里不放「打开项目」按钮，
+ * 只给项目说明与三行事实（角色 / 方法 / 产出）。 */
+export const PRODUCTS = [
+  {
+    no: '01',
+    slug: '查客 · FACT CHECKER',
+    title: ['查客 /', 'Fact Checker'],
+    kicker: 'SERIOUS GAME · 反虚假信息',
+    desc: '把青少年虚假信息对抗训练做成一款可玩的推理游戏：从文献综述与市场调研出发，完成身份与阵营机制设计、界面原型与商业化路径。',
+    facts: [
+      { k: 'ROLE', v: '产品设计 · 游戏机制 · 用户研究' },
+      { k: 'METHOD', v: '文献综述 / 市场调研 / 用户画像 / 竞品分析' },
+      { k: 'OUTPUT', v: '游戏流程与卡牌设计 · 界面原型 · 商业模式画布' },
+    ],
+    cover: 'v5',
+    glow: '#c9b6f0', // 封面主色：查客标题页的淡紫
+  },
+  {
+    no: '02',
+    slug: '禾狸 · PHORGANISER',
+    title: ['禾狸 /', 'Phorganiser'],
+    kicker: 'APP DESIGN · 智能照片管理',
+    desc: '面向「照片越存越乱」的痛点，设计 AI 自动分类、主题展馆与创作分享闭环，并给出可持续的商业模式与推广节奏。',
+    facts: [
+      { k: 'ROLE', v: '产品设计 · 交互与视觉规范' },
+      { k: 'METHOD', v: '数据分析 / PEST 与五力模型 / 用户旅程' },
+      { k: 'OUTPUT', v: '相册与搜索原型 · 三维展馆 · 色彩与图标系统' },
+    ],
+    cover: 'v6',
+    glow: '#c8cfa0', // 封面主色：禾狸视觉系统里的草木绿
+  },
+]
+
+/* ── CONTACT：软木板便签 ───────────────────────────────
+ * 便签是装饰性的（aria-hidden），真正可点的入口在浮层里的打字纸与下方说明。
+ * 文案要短：笔记宽度约 16 个等宽字符，超了会自动折行。 */
 export const NOTE_COLORS = ['#cfe0c3', '#f0e6a8', '#e8b7b7', '#a9c9dd', '#e5cfe0', '#d8cdb8']
 
 export const SEED_NOTES = [
-  { id: 's1', text: '', color: '#cfe0c3', x: 14, y: 42, rot: -2 },
-  { id: 's2', text: '', color: '#f0e6a8', x: 70, y: 12, rot: 3 },
-  { id: 's3', text: '', color: '#e8b7b7', x: 80, y: 33, rot: -3 },
+  { id: 's1', text: 'EMAIL\n2433679374\n@qq.com', color: '#cfe0c3', x: 12, y: 38, rot: -2 },
+  { id: 's2', text: '小红书\n西班牙的荷包蛋', color: '#f0e6a8', x: 68, y: 10, rot: 3 },
+  { id: 's3', text: '抖音\n@号号', color: '#e8b7b7', x: 78, y: 32, rot: -3 },
+  { id: 's4', text: 'TEL\n132 7757 1951', color: '#a9c9dd', x: 10, y: 16, rot: 2 },
+  { id: 's5', text: '香港理工大学\n硕士在读', color: '#e5cfe0', x: 22, y: 62, rot: -1 },
 ]

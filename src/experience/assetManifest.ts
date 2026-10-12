@@ -41,7 +41,7 @@ export type FailPolicy =
   | 'degrade'
 
 /**
- * 响应式派生图。由 scripts/gen-image-variants.sh 生成，
+ * 响应式派生图。由 scripts/gen-image-variants.mjs 生成，
  * 运行时由 src/components/work/imageSources.ts 的 workImage() 拼成 srcset，
  * 浏览器按显示尺寸和 DPR 只取其中一张 —— 所以变体是同一份资源的不同档位，
  * 不是彼此独立的资源，登记为 entry 的子项而不是并列条目。
@@ -218,186 +218,206 @@ const TYPE_STAGE: AssetEntry = {
 
 /**
  * 作品图的响应式派生档位。
- * 宽度必须与 scripts/gen-image-variants.sh 和 imageSources.ts 的 VARIANTS 一致；
- * 换图后用文件头的命令重新生成 bytes / version。
+ *
+ * 这一整段与下面的 WORK_ASSETS 都由 `scripts/assets/sync-work-manifest.mjs`
+ * 从 public/assets/ 生成（标记之间勿手改）：换一批作品图之后跑一次，
+ * 就会按磁盘上的真实文件补齐登记、体积与版本哈希。
+ * 宽度档位必须与 scripts/gen-image-variants.mjs 和 imageSources.ts 的 VARIANTS 一致。
  */
 const WORK_VARIANTS: Record<string, readonly AssetVariant[]> = {
-  '/assets/photo/p1.webp': [
-    { width: 300, url: '/assets/photo/p1-300.webp', bytes: 9470, version: '3f9595f9' },
-    { width: 600, url: '/assets/photo/p1-600.webp', bytes: 30562, version: '699959ac' },
-    { width: 900, url: '/assets/photo/p1-900.webp', bytes: 57478, version: 'e9a9e0ad' },
+/* WORK_VARIANTS:BEGIN */
+  '/assets/photo/w1.webp': [
+    { width: 300, url: '/assets/photo/w1-300.webp', bytes: 12838, version: 'ccb41c5c' },
+    { width: 600, url: '/assets/photo/w1-600.webp', bytes: 42766, version: '6401a8ac' },
   ],
-  '/assets/photo/p2.webp': [
-    { width: 300, url: '/assets/photo/p2-300.webp', bytes: 12300, version: '51c1a6cb' },
-    { width: 600, url: '/assets/photo/p2-600.webp', bytes: 45054, version: 'cc7ee9fb' },
-    { width: 900, url: '/assets/photo/p2-900.webp', bytes: 92466, version: 'adf44781' },
+  '/assets/photo/w10.webp': [
+    { width: 300, url: '/assets/photo/w10-300.webp', bytes: 15128, version: '082eebfe' },
+    { width: 600, url: '/assets/photo/w10-600.webp', bytes: 50952, version: '2d3f6181' },
   ],
-  '/assets/photo/p3.webp': [
-    { width: 300, url: '/assets/photo/p3-300.webp', bytes: 15680, version: '1b51f0b6' },
-    { width: 600, url: '/assets/photo/p3-600.webp', bytes: 56048, version: 'c159422d' },
-    { width: 900, url: '/assets/photo/p3-900.webp', bytes: 114590, version: 'edc6b1cb' },
+  '/assets/photo/w11.webp': [
+    { width: 300, url: '/assets/photo/w11-300.webp', bytes: 13444, version: '95ada411' },
+    { width: 600, url: '/assets/photo/w11-600.webp', bytes: 40060, version: 'b8a49a66' },
   ],
-  '/assets/photo/p4.webp': [
-    { width: 300, url: '/assets/photo/p4-300.webp', bytes: 6144, version: '348bee3c' },
-    { width: 600, url: '/assets/photo/p4-600.webp', bytes: 17086, version: '7b67284a' },
-    { width: 900, url: '/assets/photo/p4-900.webp', bytes: 30724, version: '02d86f2e' },
+  '/assets/photo/w12.webp': [
+    { width: 300, url: '/assets/photo/w12-300.webp', bytes: 12266, version: 'df0c1d2d' },
+    { width: 600, url: '/assets/photo/w12-600.webp', bytes: 35480, version: '52b0b648' },
   ],
-  '/assets/photo/p5.webp': [
-    { width: 300, url: '/assets/photo/p5-300.webp', bytes: 6452, version: 'b5012b78' },
-    { width: 600, url: '/assets/photo/p5-600.webp', bytes: 20132, version: 'e743da83' },
-    { width: 900, url: '/assets/photo/p5-900.webp', bytes: 39166, version: 'a4bb8f0a' },
+  '/assets/photo/w2.webp': [
+    { width: 300, url: '/assets/photo/w2-300.webp', bytes: 7918, version: '39a35521' },
+    { width: 600, url: '/assets/photo/w2-600.webp', bytes: 22228, version: '17da02e4' },
   ],
-  '/assets/photo/p6.webp': [
-    { width: 300, url: '/assets/photo/p6-300.webp', bytes: 16512, version: '8bda4dff' },
-    { width: 600, url: '/assets/photo/p6-600.webp', bytes: 59526, version: '1649edae' },
-    { width: 900, url: '/assets/photo/p6-900.webp', bytes: 118540, version: '180765eb' },
+  '/assets/photo/w3.webp': [
+    { width: 300, url: '/assets/photo/w3-300.webp', bytes: 12234, version: 'e5f53fc3' },
+    { width: 600, url: '/assets/photo/w3-600.webp', bytes: 34538, version: '657498cc' },
   ],
-  '/assets/posters/butterfly.webp': [
-    { width: 400, url: '/assets/posters/butterfly-400.webp', bytes: 17446, version: 'be190f40' },
-    { width: 700, url: '/assets/posters/butterfly-700.webp', bytes: 42286, version: 'd9d5182c' },
+  '/assets/photo/w4.webp': [
+    { width: 300, url: '/assets/photo/w4-300.webp', bytes: 7378, version: '3dc7d1fa' },
+    { width: 600, url: '/assets/photo/w4-600.webp', bytes: 22916, version: 'ed75dbab' },
   ],
-  '/assets/posters/childhood.webp': [
-    { width: 400, url: '/assets/posters/childhood-400.webp', bytes: 33844, version: 'f28eb893' },
-    { width: 700, url: '/assets/posters/childhood-700.webp', bytes: 75096, version: '90aedcf9' },
+  '/assets/photo/w5.webp': [
+    { width: 300, url: '/assets/photo/w5-300.webp', bytes: 13010, version: '6fee0f89' },
+    { width: 600, url: '/assets/photo/w5-600.webp', bytes: 41460, version: 'b0c40799' },
   ],
-  '/assets/posters/chocaward.webp': [
-    { width: 400, url: '/assets/posters/chocaward-400.webp', bytes: 17402, version: '781de108' },
-    { width: 700, url: '/assets/posters/chocaward-700.webp', bytes: 39798, version: 'ca85c960' },
+  '/assets/photo/w6.webp': [
+    { width: 300, url: '/assets/photo/w6-300.webp', bytes: 18960, version: '2da6bd17' },
+    { width: 600, url: '/assets/photo/w6-600.webp', bytes: 58882, version: '772556ad' },
   ],
-  '/assets/posters/chocmint.webp': [
-    { width: 400, url: '/assets/posters/chocmint-400.webp', bytes: 13866, version: 'e0ad8732' },
-    { width: 700, url: '/assets/posters/chocmint-700.webp', bytes: 34908, version: 'b07fccbe' },
+  '/assets/photo/w7.webp': [
+    { width: 300, url: '/assets/photo/w7-300.webp', bytes: 10904, version: '5768c184' },
+    { width: 600, url: '/assets/photo/w7-600.webp', bytes: 35992, version: 'feb1c60f' },
   ],
-  '/assets/posters/frangipani.webp': [
-    { width: 400, url: '/assets/posters/frangipani-400.webp', bytes: 10878, version: '5243ca8d' },
-    { width: 700, url: '/assets/posters/frangipani-700.webp', bytes: 21570, version: '27fd936e' },
+  '/assets/photo/w8.webp': [
+    { width: 300, url: '/assets/photo/w8-300.webp', bytes: 16886, version: '377ee816' },
+    { width: 600, url: '/assets/photo/w8-600.webp', bytes: 52706, version: '11ffe472' },
   ],
-  '/assets/posters/grassfest.webp': [
-    { width: 400, url: '/assets/posters/grassfest-400.webp', bytes: 39122, version: '1d9da198' },
-    { width: 700, url: '/assets/posters/grassfest-700.webp', bytes: 99842, version: 'ad1f1e82' },
+  '/assets/photo/w9.webp': [
+    { width: 300, url: '/assets/photo/w9-300.webp', bytes: 12818, version: 'e1a964ef' },
+    { width: 600, url: '/assets/photo/w9-600.webp', bytes: 37794, version: '4656e96e' },
   ],
-  '/assets/posters/greenapple.webp': [
-    { width: 400, url: '/assets/posters/greenapple-400.webp', bytes: 11500, version: '4a5b4d09' },
-    { width: 700, url: '/assets/posters/greenapple-700.webp', bytes: 24714, version: 'cd8252d1' },
+  '/assets/posters/s1.webp': [
+    { width: 400, url: '/assets/posters/s1-400.webp', bytes: 26146, version: '738d5009' },
   ],
-  '/assets/posters/happynewyear.webp': [
-    { width: 400, url: '/assets/posters/happynewyear-400.webp', bytes: 24158, version: '506b38c9' },
-    { width: 700, url: '/assets/posters/happynewyear-700.webp', bytes: 47674, version: '232ff36a' },
+  '/assets/posters/s10.webp': [
+    { width: 400, url: '/assets/posters/s10-400.webp', bytes: 24174, version: '5f82dc0d' },
   ],
-  '/assets/posters/research.webp': [
-    { width: 400, url: '/assets/posters/research-400.webp', bytes: 17446, version: '73b44364' },
-    { width: 700, url: '/assets/posters/research-700.webp', bytes: 38796, version: '8b39d60a' },
+  '/assets/posters/s11.webp': [
+    { width: 400, url: '/assets/posters/s11-400.webp', bytes: 33548, version: '5ecbbc97' },
   ],
-  '/assets/posters/streamnow.webp': [
-    { width: 400, url: '/assets/posters/streamnow-400.webp', bytes: 19032, version: '4fedc2f1' },
-    { width: 700, url: '/assets/posters/streamnow-700.webp', bytes: 43708, version: '669ca6d8' },
+  '/assets/posters/s2.webp': [
+    { width: 400, url: '/assets/posters/s2-400.webp', bytes: 34388, version: 'c88d2d27' },
   ],
-  '/assets/posters/yexing.webp': [
-    { width: 400, url: '/assets/posters/yexing-400.webp', bytes: 13148, version: '25cb7716' },
-    { width: 700, url: '/assets/posters/yexing-700.webp', bytes: 23330, version: '5280ec7f' },
+  '/assets/posters/s3.webp': [
+    { width: 400, url: '/assets/posters/s3-400.webp', bytes: 18522, version: 'b827dca6' },
   ],
-  '/assets/mag/m1.webp': [
-    { width: 420, url: '/assets/mag/m1-420.webp', bytes: 36306, version: '5f1141cf' },
-    { width: 760, url: '/assets/mag/m1-760.webp', bytes: 86436, version: 'e0221d74' },
+  '/assets/posters/s4.webp': [
+    { width: 400, url: '/assets/posters/s4-400.webp', bytes: 20928, version: 'a80b0f33' },
   ],
-  '/assets/mag/m2.webp': [
-    { width: 420, url: '/assets/mag/m2-420.webp', bytes: 9282, version: 'dea1f114' },
-    { width: 760, url: '/assets/mag/m2-760.webp', bytes: 29790, version: 'f20fed77' },
+  '/assets/posters/s5.webp': [
+    { width: 400, url: '/assets/posters/s5-400.webp', bytes: 26282, version: '559795a3' },
   ],
-  '/assets/mag/m3.webp': [
-    { width: 420, url: '/assets/mag/m3-420.webp', bytes: 13878, version: '1956bc49' },
-    { width: 760, url: '/assets/mag/m3-760.webp', bytes: 55716, version: '788fe0d8' },
+  '/assets/posters/s6.webp': [
+    { width: 400, url: '/assets/posters/s6-400.webp', bytes: 39880, version: '1089eac6' },
   ],
-  '/assets/mag/m4.webp': [
-    { width: 420, url: '/assets/mag/m4-420.webp', bytes: 21890, version: 'e9aab9a8' },
-    { width: 760, url: '/assets/mag/m4-760.webp', bytes: 56362, version: '5c3e95f7' },
+  '/assets/posters/s7.webp': [
+    { width: 400, url: '/assets/posters/s7-400.webp', bytes: 18830, version: '6475dc89' },
   ],
-  '/assets/mag/m5.webp': [
-    { width: 420, url: '/assets/mag/m5-420.webp', bytes: 24760, version: 'f386818c' },
-    { width: 760, url: '/assets/mag/m5-760.webp', bytes: 73848, version: 'c6153111' },
+  '/assets/posters/s8.webp': [
+    { width: 400, url: '/assets/posters/s8-400.webp', bytes: 33266, version: 'cccc335d' },
   ],
-  '/assets/mag/m6.webp': [
-    { width: 420, url: '/assets/mag/m6-420.webp', bytes: 11510, version: '9b880c3d' },
-    { width: 760, url: '/assets/mag/m6-760.webp', bytes: 36006, version: 'f33e97cd' },
+  '/assets/posters/s9.webp': [
+    { width: 400, url: '/assets/posters/s9-400.webp', bytes: 34982, version: '63fb8fa1' },
   ],
-  '/assets/cover/coffee.webp': [
-    { width: 480, url: '/assets/cover/coffee-480.webp', bytes: 9884, version: '8df54a37' },
-    { width: 640, url: '/assets/cover/coffee-640.webp', bytes: 15000, version: '971a4c8d' },
-    { width: 960, url: '/assets/cover/coffee-960.webp', bytes: 27670, version: '1f074ddb' },
+  '/assets/mag/cover.webp': [
+    { width: 420, url: '/assets/mag/cover-420.webp', bytes: 27438, version: '825a2e34' },
   ],
-  '/assets/cover/drama.webp': [
-    { width: 480, url: '/assets/cover/drama-480.webp', bytes: 11226, version: 'c5e2e458' },
-    { width: 640, url: '/assets/cover/drama-640.webp', bytes: 15742, version: '362495d6' },
-    { width: 960, url: '/assets/cover/drama-960.webp', bytes: 25030, version: '17ed5bed' },
+  '/assets/mag/d1l.webp': [
+    { width: 420, url: '/assets/mag/d1l-420.webp', bytes: 40516, version: 'bdafdc8b' },
   ],
-  '/assets/cover/pv1.webp': [
-    { width: 480, url: '/assets/cover/pv1-480.webp', bytes: 9736, version: '07e0a8dd' },
-    { width: 640, url: '/assets/cover/pv1-640.webp', bytes: 14140, version: '7da7ebea' },
-    { width: 960, url: '/assets/cover/pv1-960.webp', bytes: 23284, version: '25893e5d' },
+  '/assets/mag/d1r.webp': [
+    { width: 420, url: '/assets/mag/d1r-420.webp', bytes: 32518, version: 'a65d9cb6' },
   ],
-  '/assets/cover/pv2.webp': [
-    { width: 480, url: '/assets/cover/pv2-480.webp', bytes: 9742, version: 'be84e6f4' },
-    { width: 640, url: '/assets/cover/pv2-640.webp', bytes: 14014, version: 'b6e991d8' },
-    { width: 960, url: '/assets/cover/pv2-960.webp', bytes: 22412, version: 'ad353bf8' },
+  '/assets/mag/d2l.webp': [
+    { width: 420, url: '/assets/mag/d2l-420.webp', bytes: 20968, version: '278ea82e' },
   ],
-  '/assets/cover/wechat.webp': [
-    { width: 480, url: '/assets/cover/wechat-480.webp', bytes: 14812, version: '27c25d07' },
-    { width: 640, url: '/assets/cover/wechat-640.webp', bytes: 27566, version: 'b7c8c14e' },
-    { width: 960, url: '/assets/cover/wechat-960.webp', bytes: 59956, version: '227ddc04' },
+  '/assets/mag/d2r.webp': [
+    { width: 420, url: '/assets/mag/d2r-420.webp', bytes: 27500, version: '4de00ec9' },
   ],
+  '/assets/mag/d3l.webp': [
+    { width: 420, url: '/assets/mag/d3l-420.webp', bytes: 24608, version: '331ae720' },
+  ],
+  '/assets/mag/d3r.webp': [
+    { width: 420, url: '/assets/mag/d3r-420.webp', bytes: 28618, version: 'a0705924' },
+  ],
+  '/assets/mag/d4l.webp': [
+    { width: 420, url: '/assets/mag/d4l-420.webp', bytes: 36704, version: '102ded0e' },
+  ],
+  '/assets/mag/d4r.webp': [
+    { width: 420, url: '/assets/mag/d4r-420.webp', bytes: 34172, version: 'daff3d24' },
+  ],
+  '/assets/mag/d5l.webp': [
+    { width: 420, url: '/assets/mag/d5l-420.webp', bytes: 43862, version: 'ea9b8647' },
+  ],
+  '/assets/mag/d5r.webp': [
+    { width: 420, url: '/assets/mag/d5r-420.webp', bytes: 56006, version: '60d133e6' },
+  ],
+  '/assets/mag/d6l.webp': [
+    { width: 420, url: '/assets/mag/d6l-420.webp', bytes: 31876, version: '94310648' },
+  ],
+  '/assets/mag/d6r.webp': [
+    { width: 420, url: '/assets/mag/d6r-420.webp', bytes: 28968, version: '90ad9463' },
+  ],
+  '/assets/cover/v1.webp': [
+    { width: 480, url: '/assets/cover/v1-480.webp', bytes: 19436, version: '6d667192' },
+    { width: 760, url: '/assets/cover/v1-760.webp', bytes: 36280, version: '3891d9ab' },
+  ],
+  '/assets/cover/v2.webp': [
+    { width: 480, url: '/assets/cover/v2-480.webp', bytes: 16962, version: '1b908d59' },
+    { width: 760, url: '/assets/cover/v2-760.webp', bytes: 30924, version: '722e4dcd' },
+  ],
+  '/assets/cover/v3.webp': [
+    { width: 480, url: '/assets/cover/v3-480.webp', bytes: 22284, version: '5cae5f97' },
+    { width: 760, url: '/assets/cover/v3-760.webp', bytes: 43834, version: '30adfb94' },
+  ],
+  '/assets/cover/v4.webp': [
+    { width: 480, url: '/assets/cover/v4-480.webp', bytes: 25556, version: '3e402596' },
+    { width: 760, url: '/assets/cover/v4-760.webp', bytes: 44496, version: 'd651c5b1' },
+  ],
+  '/assets/cover/v5.webp': [
+    { width: 480, url: '/assets/cover/v5-480.webp', bytes: 17080, version: '177267b5' },
+    { width: 760, url: '/assets/cover/v5-760.webp', bytes: 28886, version: '8aabac0b' },
+  ],
+  '/assets/cover/v6.webp': [
+    { width: 480, url: '/assets/cover/v6-480.webp', bytes: 29890, version: 'cb824ac5' },
+    { width: 760, url: '/assets/cover/v6-760.webp', bytes: 58964, version: '17271602' },
+  ],
+/* WORK_VARIANTS:END */
 }
-
 /** 作品页资源：非首屏阻塞 */
 const WORK_ASSETS: AssetEntry[] = [
-  lazyAsset('poster.butterfly', '/assets/posters/butterfly.webp', 'work.poster', 174186, 'cbba82ef'),
-  lazyAsset('poster.childhood', '/assets/posters/childhood.webp', 'work.poster', 173676, '975a733b'),
-  lazyAsset('poster.chocaward', '/assets/posters/chocaward.webp', 'work.poster', 129226, '14b39fe6'),
-  lazyAsset('poster.chocmint', '/assets/posters/chocmint.webp', 'work.poster', 103698, '08718db6'),
-  lazyAsset(
-    'poster.frangipani',
-    '/assets/posters/frangipani.webp',
-    'work.poster',
-    58214,
-    'f786d9ac',
-  ),
-  lazyAsset('poster.grassfest', '/assets/posters/grassfest.webp', 'work.poster', 347112, '29293951'),
-  lazyAsset(
-    'poster.greenapple',
-    '/assets/posters/greenapple.webp',
-    'work.poster',
-    80844,
-    '867cc445',
-  ),
-  lazyAsset(
-    'poster.happynewyear',
-    '/assets/posters/happynewyear.webp',
-    'work.poster',
-    144796,
-    '9cad0f80',
-  ),
-  lazyAsset('poster.research', '/assets/posters/research.webp', 'work.poster', 162886, 'c0911601'),
-  lazyAsset('poster.streamnow', '/assets/posters/streamnow.webp', 'work.poster', 173162, '54b5134a'),
-  lazyAsset('poster.yexing', '/assets/posters/yexing.webp', 'work.poster', 52526, 'c33b79c6'),
-
-  lazyAsset('photo.p1', '/assets/photo/p1.webp', 'work.photo', 186058, 'b124e85d'),
-  lazyAsset('photo.p2', '/assets/photo/p2.webp', 'work.photo', 313260, '0559f26c'),
-  lazyAsset('photo.p3', '/assets/photo/p3.webp', 'work.photo', 394916, '6ee5f345'),
-  lazyAsset('photo.p4', '/assets/photo/p4.webp', 'work.photo', 98262, 'f3848db4'),
-  lazyAsset('photo.p5', '/assets/photo/p5.webp', 'work.photo', 146254, 'a15f0004'),
-  lazyAsset('photo.p6', '/assets/photo/p6.webp', 'work.photo', 380112, '8437a334'),
-
-  lazyAsset('cover.coffee', '/assets/cover/coffee.webp', 'work.cover', 93228, '05c9bfa9'),
-  lazyAsset('cover.drama', '/assets/cover/drama.webp', 'work.cover', 63816, 'c2b35052'),
-  lazyAsset('cover.pv1', '/assets/cover/pv1.webp', 'work.cover', 51286, 'c8a696ad'),
-  lazyAsset('cover.pv2', '/assets/cover/pv2.webp', 'work.cover', 55314, '803b87d2'),
-  lazyAsset('cover.wechat', '/assets/cover/wechat.webp', 'work.cover', 229136, '7840b9cd'),
-
-  lazyAsset('mag.m1', '/assets/mag/m1.webp', 'work.magazine', 283594, 'a25bd5f2'),
-  lazyAsset('mag.m2', '/assets/mag/m2.webp', 'work.magazine', 184180, 'a02c812c'),
-  lazyAsset('mag.m3', '/assets/mag/m3.webp', 'work.magazine', 304300, 'dad485a0'),
-  lazyAsset('mag.m4', '/assets/mag/m4.webp', 'work.magazine', 187844, '98a1ad37'),
-  lazyAsset('mag.m5', '/assets/mag/m5.webp', 'work.magazine', 294262, '4937dc94'),
-  lazyAsset('mag.m6', '/assets/mag/m6.webp', 'work.magazine', 170560, '5d56aee1'),
+/* WORK_ASSETS:BEGIN */
+  lazyAsset('photo.w1', '/assets/photo/w1.webp', 'work.photo', 84588, 'd4a8e05d'),
+  lazyAsset('photo.w10', '/assets/photo/w10.webp', 'work.photo', 106330, '72f12c79'),
+  lazyAsset('photo.w11', '/assets/photo/w11.webp', 'work.photo', 79350, '6b76c2fb'),
+  lazyAsset('photo.w12', '/assets/photo/w12.webp', 'work.photo', 67296, 'd2dc2411'),
+  lazyAsset('photo.w2', '/assets/photo/w2.webp', 'work.photo', 42574, '7f4b2c93'),
+  lazyAsset('photo.w3', '/assets/photo/w3.webp', 'work.photo', 66274, '648943ff'),
+  lazyAsset('photo.w4', '/assets/photo/w4.webp', 'work.photo', 45826, 'd5c1406e'),
+  lazyAsset('photo.w5', '/assets/photo/w5.webp', 'work.photo', 80786, 'd71ac473'),
+  lazyAsset('photo.w6', '/assets/photo/w6.webp', 'work.photo', 113958, '33a0bde0'),
+  lazyAsset('photo.w7', '/assets/photo/w7.webp', 'work.photo', 69698, '98e26550'),
+  lazyAsset('photo.w8', '/assets/photo/w8.webp', 'work.photo', 105250, 'df869eec'),
+  lazyAsset('photo.w9', '/assets/photo/w9.webp', 'work.photo', 72274, '63470958'),
+  lazyAsset('poster.s1', '/assets/posters/s1.webp', 'work.poster', 51708, 'ddd04e17'),
+  lazyAsset('poster.s10', '/assets/posters/s10.webp', 'work.poster', 54914, '82851868'),
+  lazyAsset('poster.s11', '/assets/posters/s11.webp', 'work.poster', 77426, '3aa4d341'),
+  lazyAsset('poster.s2', '/assets/posters/s2.webp', 'work.poster', 77700, 'aedc729c'),
+  lazyAsset('poster.s3', '/assets/posters/s3.webp', 'work.poster', 41230, 'a0291936'),
+  lazyAsset('poster.s4', '/assets/posters/s4.webp', 'work.poster', 43000, '442e0aa1'),
+  lazyAsset('poster.s5', '/assets/posters/s5.webp', 'work.poster', 61518, 'df47dc6e'),
+  lazyAsset('poster.s6', '/assets/posters/s6.webp', 'work.poster', 92176, '678497fc'),
+  lazyAsset('poster.s7', '/assets/posters/s7.webp', 'work.poster', 43938, '9e1797a7'),
+  lazyAsset('poster.s8', '/assets/posters/s8.webp', 'work.poster', 76514, '034a1cda'),
+  lazyAsset('poster.s9', '/assets/posters/s9.webp', 'work.poster', 81884, '3acb2188'),
+  lazyAsset('mag.cover', '/assets/mag/cover.webp', 'work.magazine', 58128, 'f643da4b'),
+  lazyAsset('mag.d1l', '/assets/mag/d1l.webp', 'work.magazine', 94036, '86998e6c'),
+  lazyAsset('mag.d1r', '/assets/mag/d1r.webp', 'work.magazine', 74010, '9dbbb7bf'),
+  lazyAsset('mag.d2l', '/assets/mag/d2l.webp', 'work.magazine', 45036, '378356cb'),
+  lazyAsset('mag.d2r', '/assets/mag/d2r.webp', 'work.magazine', 65514, '3abf48d3'),
+  lazyAsset('mag.d3l', '/assets/mag/d3l.webp', 'work.magazine', 60170, '9d44eb01'),
+  lazyAsset('mag.d3r', '/assets/mag/d3r.webp', 'work.magazine', 69560, '040e9e68'),
+  lazyAsset('mag.d4l', '/assets/mag/d4l.webp', 'work.magazine', 83054, '7d6fc5e3'),
+  lazyAsset('mag.d4r', '/assets/mag/d4r.webp', 'work.magazine', 80660, '24b19730'),
+  lazyAsset('mag.d5l', '/assets/mag/d5l.webp', 'work.magazine', 97912, 'a6df817b'),
+  lazyAsset('mag.d5r', '/assets/mag/d5r.webp', 'work.magazine', 135376, 'ef748904'),
+  lazyAsset('mag.d6l', '/assets/mag/d6l.webp', 'work.magazine', 78306, 'a19678d2'),
+  lazyAsset('mag.d6r', '/assets/mag/d6r.webp', 'work.magazine', 68950, 'ff775101'),
+  lazyAsset('cover.v1', '/assets/cover/v1.webp', 'work.cover', 71010, '794c66da'),
+  lazyAsset('cover.v2', '/assets/cover/v2.webp', 'work.cover', 56520, '3ce2bf54'),
+  lazyAsset('cover.v3', '/assets/cover/v3.webp', 'work.cover', 95996, '9eeec886'),
+  lazyAsset('cover.v4', '/assets/cover/v4.webp', 'work.cover', 76452, 'b44afe90'),
+  lazyAsset('cover.v5', '/assets/cover/v5.webp', 'work.cover', 48416, 'c8600b32'),
+  lazyAsset('cover.v6', '/assets/cover/v6.webp', 'work.cover', 122612, '48978758'),
+/* WORK_ASSETS:END */
 ]
 
 /** 全站资源清单 */

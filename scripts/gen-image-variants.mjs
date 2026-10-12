@@ -1,13 +1,13 @@
 #!/usr/bin/env node
 /**
- * 为作品图生成与显示尺寸匹配的响应式变体（与 scripts/gen-image-variants.sh 同一套参数）。
+ * 为作品图生成与显示尺寸匹配的响应式变体。
  *
  * 原图都是 1000–1400px 宽，而实际显示宽度只有 200–530 CSS px，直接用原图会让每张图的
  * RGBA 解码内存翻好几倍。这里按各栏目最大显示宽度 ×1 / ×2 生成两档变体，
  * 页面用 srcset/sizes 交给浏览器挑（宽度表见 src/components/work/imageSources.ts）。
  *
- * 与 .sh 版的区别：不依赖 libwebp 命令行（dwebp/cwebp），改用仓库已有的 sharp。
- * 质量与 .sh 版一致：webp q80、尺寸只缩不放。
+ * 用仓库已有的 sharp，不依赖 libwebp 命令行（dwebp/cwebp）：
+ * webp q80、尺寸只缩不放，母版本身即该栏目的最大档。
  *
  * 用法：
  *   node scripts/gen-image-variants.mjs                 # 原地生成到 public/assets
@@ -23,12 +23,12 @@ import sharp from 'sharp'
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 const assets = path.join(root, 'public/assets')
 
-/** 目录:宽度列表 —— 与 .sh 版逐字一致，改动要同步 imageSources.ts */
+/** 目录:宽度列表 —— 与 imageSources.ts 的 VARIANTS 一致；母版宽度即该栏目的最大档 */
 const TARGETS = {
-  photo: [300, 600, 900], // 照片墙格子 300px
-  posters: [400, 700], // 海报卡 210–330px
-  mag: [420, 760], // 杂志单页 ≤360px
-  cover: [480, 640, 960], // 视频封面 ≤435px / 网站卡 ≤532px
+  photo: [300, 600], // 视觉墙格子最大 448px → 母版 900
+  posters: [400], // 海报牌 210–330px → 母版 700
+  mag: [420], // 样刊单页 ≤330px → 母版 760
+  cover: [480, 760], // 影像封面 ≤660px / 项目卡 ≤532px → 母版 1200
 }
 
 const args = process.argv.slice(2)

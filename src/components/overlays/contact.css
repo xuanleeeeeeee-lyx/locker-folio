@@ -64,7 +64,10 @@
 .cb__note {
   position: absolute;
   width: clamp(84px, 11.8%, 158px);
-  aspect-ratio: 1;
+  /* 原来是正方形（aspect-ratio: 1）+ overflow: hidden：便签上写联系方式时，
+     邮箱这类长文本会被裁掉最后一行。改成最小高度 + 随内容增高，
+     方形的观感保留，文字永远读得全。 */
+  min-height: clamp(84px, 11.8%, 158px);
   /* 注意：这里不能用 % padding —— 绝对定位元素的 % 参照的是包含块宽度 */
   padding: 1.75em 1.15em 1em;
   border-radius: 2px;
@@ -81,6 +84,8 @@
 
 .cb__note p {
   margin: 0;
+  /* 文案里的换行要生效：便签是窄条，联系方式得由作者决定在哪断行 */
+  white-space: pre-line;
 }
 
 /* 只给屏幕阅读器的状态播报 */

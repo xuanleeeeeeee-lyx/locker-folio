@@ -2,12 +2,17 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import BackToFolders from './BackToFolders'
 import PostersDeck from './PostersDeck'
 import MagazineBook from './MagazineBook'
-import IpDesign from './IpDesign'
 import './design.css'
 
-const SECTIONS = ['posters', 'magazine', 'ip'] as const
+const SECTIONS = ['posters', 'magazine'] as const
 
-/** SELECTED WORK › DESIGN —— 三段式：海报 / 杂志 / IP */
+/**
+ * SELECTED WORK › DESIGN —— 两段式：海报牌 / 样刊。
+ *
+ * 原来是三段（海报 / 杂志 / IP 形象设计）。当前作品集里没有 IP 形象这一类，
+ * 与其留一段空壳，不如把段数收成两段：段数只由 SECTIONS 驱动，
+ * 页点、滚轮翻段与底部的跳转按钮都会跟着变。
+ */
 export default function DesignView() {
   const [sec, setSec] = useState(0)
   const railRef = useRef<HTMLDivElement>(null)
@@ -62,9 +67,6 @@ export default function DesignView() {
         <section className="dv__sec">
           <MagazineBook active={sec === 1} />
         </section>
-        <section className="dv__sec">
-          <IpDesign active={sec === 2} />
-        </section>
       </div>
 
       {sec < SECTIONS.length - 1 && (
@@ -74,7 +76,7 @@ export default function DesignView() {
             className="wv__jump"
             onClick={() => goto(sec + 1)}
           >
-            {sec === 0 ? 'VIEW MAGAZINE' : 'VIEW IP DESIGN'}
+            'VIEW MAGAZINE'
             <svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.3">
               <path d="M6 1v9M2.4 6.6 6 10.2l3.6-3.6" strokeLinecap="round" strokeLinejoin="round" />
             </svg>

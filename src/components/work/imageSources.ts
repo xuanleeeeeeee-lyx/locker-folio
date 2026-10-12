@@ -1,25 +1,27 @@
 /**
  * 作品图的响应式源。
  *
- * 原图宽 1000–1400px，而各栏目真实显示宽度只有 200–530 CSS px。
- * `scripts/gen-image-variants.sh` 按 1x / 2x 生成了两档变体，这里统一拼 srcset，
+ * 母版由 scripts/assets/import-portfolio-pdf.mjs 从作品集 PDF 裁出，
+ * 宽度就取各栏目最大显示宽度的 2 倍（见下面 FULL_W），
+ * 因此这里不再需要比母版更大的「原图」——最大档本身就是够用的那一档。
+ * 更窄的档位由 `scripts/gen-image-variants.mjs` 生成，这里统一拼 srcset，
  * 让浏览器按显示尺寸和 DPR 取最小的一张 —— 直接决定 RGBA 解码占用的内存。
  */
 
-/** 各栏目原图的像素宽 */
+/** 各栏目母版的像素宽（= 最大显示宽度的 2 倍，导入脚本按这个导出） */
 const FULL_W = {
-  photo: 1400,
-  posters: 1000,
-  mag: 1049,
-  cover: 1400,
+  photo: 900, // 视觉墙格子最大 448px
+  posters: 700, // 海报牌 210–330px
+  mag: 760, // 样刊单页 ≤330px
+  cover: 1200, // 影像封面 ≤660px / 项目卡 ≤532px
 } as const
 
-/** 与生成脚本保持一致的变体宽度 */
+/** 与 scripts/gen-image-variants.mjs 的 TARGETS 保持一致 */
 const VARIANTS: Record<keyof typeof FULL_W, number[]> = {
-  photo: [300, 600, 900],
-  posters: [400, 700],
-  mag: [420, 760],
-  cover: [480, 640, 960],
+  photo: [300, 600],
+  posters: [400],
+  mag: [420],
+  cover: [480, 760],
 }
 
 export type WorkAssetDir = keyof typeof FULL_W
