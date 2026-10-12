@@ -11,7 +11,8 @@
     "deploy": "bun run build && bunx wrangler deploy",
     "check:assets": "bun run scripts/check-assets.mjs",
     "check:bundle": "bun run build && bun run scripts/check-assets.mjs dist",
-    "assets:bleed": "bun scripts/bleed-alpha.mjs"
+    "assets:bleed": "bun scripts/bleed-alpha.mjs",
+    "assets:variants": "node scripts/gen-image-variants.mjs"
   },
   "dependencies": {
     "@react-three/drei": "^10.7.8",
