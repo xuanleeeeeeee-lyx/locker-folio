@@ -48,7 +48,9 @@ for (const p of preloads) {
     continue
   }
   if (!p.as) errors.push(`preload 缺少 as 属性：${p.href}`)
-  const disk = join(PUBLIC_DIR, p.href.replace(/^\//, ''))
+  // Project sites (for example GitHub Pages) place assets under one URL prefix.
+  const localHref = p.href.replace(/^\/[^/]+\/(?=assets\/)/, '/')
+  const disk = join(PUBLIC_DIR, localHref.replace(/^\//, ''))
   if (!existsSync(disk)) {
     errors.push(`preload 指向不存在的资源：${p.href}`)
   }

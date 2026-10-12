@@ -118,6 +118,12 @@ scripts/gen-image-variants.mjs  母版 → 响应式变体（sharp，不依赖 l
 scripts/check-assets.mjs   资产引用、preload 漂移与首屏体积预算
 ```
 
+## 在线部署
+
+GitHub Pages 由 `.github/workflows/deploy-pages.yml` 自动发布，目标网址为：
+<https://xuanleeeeeeee-lyx.github.io/locker-folio/>。工作流只监听本项目工作分支，
+并在构建时自动处理 Pages 子路径；本地开发与 Cloudflare 自定义域名仍使用站点根路径。
+
 ## 检查
 
 ```bash

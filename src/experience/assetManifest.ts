@@ -875,7 +875,7 @@ async function auditWorkImageSources(): Promise<void> {
     }
     const missing: string[] = []
     for (const a of ASSET_MANIFEST) {
-      const m = /^\/assets\/(photo|posters|mag|cover)\/([^/]+)\.webp$/.exec(a.url)
+      const m = /(?:^|\/)assets\/(photo|posters|mag|cover)\/([^/]+)\.webp$/.exec(a.url)
       if (!m) continue
       const dir = m[1] as Parameters<typeof workImage>[0]
       const { src, srcSet } = workImage(dir, m[2])
