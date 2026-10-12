@@ -13,6 +13,10 @@ dist
 dist-ssr
 *.local
 
+# 仓库锁文件统一用 bun.lock：在没有 bun 的环境里用 npm 装依赖时，
+# 不把 npm 生成的锁文件混进版本库。
+package-lock.json
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
